@@ -1,0 +1,1 @@
+﻿SELECT * FROM [dbo].[projektek] WHERE hatarido < CURRENT_TIMESTAMP;

@@ -1,0 +1,13 @@
+C:\Users\Ági\source\repos\Gyakorlas12.08\Gyakorlas12.08\bin\Debug\Gyakorlas12.08.exe.config
+C:\Users\Ági\source\repos\Gyakorlas12.08\Gyakorlas12.08\bin\Debug\Gyakorlas12.08.exe
+C:\Users\Ági\source\repos\Gyakorlas12.08\Gyakorlas12.08\bin\Debug\Gyakorlas12.08.pdb
+C:\Users\Ági\source\repos\Gyakorlas12.08\Gyakorlas12.08\obj\Debug\Gyakorlas12.08.csproj.AssemblyReference.cache
+C:\Users\Ági\source\repos\Gyakorlas12.08\Gyakorlas12.08\obj\Debug\Gyakorlas12._08.Form1.resources
+C:\Users\Ági\source\repos\Gyakorlas12.08\Gyakorlas12.08\obj\Debug\Gyakorlas12._08.Properties.Resources.resources
+C:\Users\Ági\source\repos\Gyakorlas12.08\Gyakorlas12.08\obj\Debug\Gyakorlas12.08.csproj.GenerateResource.cache
+C:\Users\Ági\source\repos\Gyakorlas12.08\Gyakorlas12.08\obj\Debug\Gyakorlas12.08.csproj.CoreCompileInputs.cache
+C:\Users\Ági\source\repos\Gyakorlas12.08\Gyakorlas12.08\obj\Debug\Gyakorlas12.08.exe
+C:\Users\Ági\source\repos\Gyakorlas12.08\Gyakorlas12.08\obj\Debug\Gyakorlas12.08.pdb
+C:\Users\Ági\source\repos\Gyakorlas12.08\Gyakorlas12.08\obj\Debug\Gyakorlas12._08.UC_FoOldal.resources
+C:\Users\Ági\source\repos\Gyakorlas12.08\Gyakorlas12.08\bin\Debug\Database1.mdf
+C:\Users\Ági\source\repos\Gyakorlas12.08\Gyakorlas12.08\bin\Debug\Database1_log.ldf

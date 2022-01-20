@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ProjectManagerDBModelStoreContainer" CdmEntityContainer="ProjectManagerDBEntities">
+    <EntitySetMapping Name="alkalmazottak">
+      <EntityTypeMapping TypeName="ProjectManagerDBModel.alkalmazottak">
+        <MappingFragment StoreEntitySet="alkalmazottak">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="vezeteknev" ColumnName="vezeteknev" />
+          <ScalarProperty Name="keresztnev" ColumnName="keresztnev" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="telefonszam" ColumnName="telefonszam" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ceg_alkalmazottak">
+      <EntityTypeMapping TypeName="ProjectManagerDBModel.ceg_alkalmazottak">
+        <MappingFragment StoreEntitySet="ceg_alkalmazottak">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="ceg_id" ColumnName="ceg_id" />
+          <ScalarProperty Name="alkalmazott_id" ColumnName="alkalmazott_id" />
+          <ScalarProperty Name="beosztas" ColumnName="beosztas" />
+          <ScalarProperty Name="alkalmazott_statusz" ColumnName="alkalmazott_statusz" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="cegek">
+      <EntityTypeMapping TypeName="ProjectManagerDBModel.cegek">
+        <MappingFragment StoreEntitySet="cegek">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="adoszam" ColumnName="adoszam" />
+          <ScalarProperty Name="orszag" ColumnName="orszag" />
+          <ScalarProperty Name="iranyitoszam" ColumnName="iranyitoszam" />
+          <ScalarProperty Name="telepules" ColumnName="telepules" />
+          <ScalarProperty Name="kozterulet" ColumnName="kozterulet" />
+          <ScalarProperty Name="kozterulet_jellege" ColumnName="kozterulet_jellege" />
+          <ScalarProperty Name="hazszam" ColumnName="hazszam" />
+          <ScalarProperty Name="cegnev" ColumnName="cegnev" />
+          <ScalarProperty Name="ceg_tipus" ColumnName="ceg_tipus" />
+          <ScalarProperty Name="telefonszam" ColumnName="telefonszam" />
+          <ScalarProperty Name="email" ColumnName="email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="projekt_szolgaltatasok">
+      <EntityTypeMapping TypeName="ProjectManagerDBModel.projekt_szolgaltatasok">
+        <MappingFragment StoreEntitySet="projekt_szolgaltatasok">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="projekt_id" ColumnName="projekt_id" />
+          <ScalarProperty Name="szolgaltatas_id" ColumnName="szolgaltatas_id" />
+          <ScalarProperty Name="statusz_id" ColumnName="statusz_id" />
+          <ScalarProperty Name="egyseg_ar" ColumnName="egyseg_ar" />
+          <ScalarProperty Name="mennyiseg" ColumnName="mennyiseg" />
+          <ScalarProperty Name="megjegyzes" ColumnName="megjegyzes" />
+          <ScalarProperty Name="szinkod" ColumnName="szinkod" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="projektek">
+      <EntityTypeMapping TypeName="ProjectManagerDBModel.projektek">
+        <MappingFragment StoreEntitySet="projektek">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="megnevezes" ColumnName="megnevezes" />
+          <ScalarProperty Name="ceg_id" ColumnName="ceg_id" />
+          <ScalarProperty Name="statusz" ColumnName="statusz" />
+          <ScalarProperty Name="hatarido" ColumnName="hatarido" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="statuszok">
+      <EntityTypeMapping TypeName="ProjectManagerDBModel.statuszok">
+        <MappingFragment StoreEntitySet="statuszok">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="megnevezes" ColumnName="megnevezes" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="szolgaltatasok">
+      <EntityTypeMapping TypeName="ProjectManagerDBModel.szolgaltatasok">
+        <MappingFragment StoreEntitySet="szolgaltatasok">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nev" ColumnName="nev" />
+          <ScalarProperty Name="leiras" ColumnName="leiras" />
+          <ScalarProperty Name="egyseg_ar" ColumnName="egyseg_ar" />
+          <ScalarProperty Name="mennyisegi_egyseg" ColumnName="mennyisegi_egyseg" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

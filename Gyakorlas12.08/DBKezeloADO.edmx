@@ -1,0 +1,502 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ProjektDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="alkalmazottak">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="vezeteknev" Type="varchar" MaxLength="50" />
+          <Property Name="keresztnev" Type="varchar" MaxLength="50" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="telefonszam" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ceg_alkalmazottak">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ceg_id" Type="int" Nullable="false" />
+          <Property Name="alkalmazott_id" Type="int" Nullable="false" />
+          <Property Name="beosztas" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="alkalmazott_statusz" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cegek">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="adoszam" Type="int" />
+          <Property Name="orszag" Type="varchar" MaxLength="50" />
+          <Property Name="iranyitoszam" Type="varchar" MaxLength="50" />
+          <Property Name="telepules" Type="varchar" MaxLength="50" />
+          <Property Name="kozterulet" Type="varchar" MaxLength="50" />
+          <Property Name="kozterulet_jellege" Type="varchar" MaxLength="50" />
+          <Property Name="hazszam" Type="varchar" MaxLength="50" />
+          <Property Name="cegnev" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ceg_tipus" Type="varchar" MaxLength="50" />
+          <Property Name="telefonszam" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="projekt_szolgaltatasok">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="projekt_id" Type="int" Nullable="false" />
+          <Property Name="szolgaltatas_id" Type="int" Nullable="false" />
+          <Property Name="statusz_id" Type="int" Nullable="false" />
+          <Property Name="egyseg_ar" Type="int" Nullable="false" />
+          <Property Name="mennyiseg" Type="float" Nullable="false" />
+          <Property Name="megjegyzes" Type="varchar" MaxLength="50" />
+          <Property Name="szinkod" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="projektek">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="megnevezes" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ceg_id" Type="int" Nullable="false" />
+          <Property Name="statusz" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="hatarido" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="statuszok">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="megnevezes" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="szolgaltatasok">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nev" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="leiras" Type="varchar" MaxLength="50" />
+          <Property Name="egyseg_ar" Type="int" Nullable="false" />
+          <Property Name="mennyisegi_egyseg" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="alkalmazott_kapcsolat">
+          <End Role="alkalmazottak" Type="Self.alkalmazottak" Multiplicity="1" />
+          <End Role="ceg_alkalmazottak" Type="Self.ceg_alkalmazottak" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="alkalmazottak">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ceg_alkalmazottak">
+              <PropertyRef Name="alkalmazott_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ceg_kapcsolat">
+          <End Role="cegek" Type="Self.cegek" Multiplicity="1" />
+          <End Role="ceg_alkalmazottak" Type="Self.ceg_alkalmazottak" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cegek">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ceg_alkalmazottak">
+              <PropertyRef Name="ceg_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="proejktek_ceg_id">
+          <End Role="cegek" Type="Self.cegek" Multiplicity="1" />
+          <End Role="projektek" Type="Self.projektek" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cegek">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="projektek">
+              <PropertyRef Name="ceg_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="projekt_kapcsolat">
+          <End Role="projektek" Type="Self.projektek" Multiplicity="1" />
+          <End Role="projekt_szolgaltatasok" Type="Self.projekt_szolgaltatasok" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="projektek">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="projekt_szolgaltatasok">
+              <PropertyRef Name="projekt_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="statuszok_kapcsolat">
+          <End Role="statuszok" Type="Self.statuszok" Multiplicity="1" />
+          <End Role="projekt_szolgaltatasok" Type="Self.projekt_szolgaltatasok" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="statuszok">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="projekt_szolgaltatasok">
+              <PropertyRef Name="statusz_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="szolgaltatas_kapcsolat">
+          <End Role="szolgaltatasok" Type="Self.szolgaltatasok" Multiplicity="1" />
+          <End Role="projekt_szolgaltatasok" Type="Self.projekt_szolgaltatasok" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="szolgaltatasok">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="projekt_szolgaltatasok">
+              <PropertyRef Name="szolgaltatas_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProjektDBModelStoreContainer">
+          <EntitySet Name="alkalmazottak" EntityType="Self.alkalmazottak" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ceg_alkalmazottak" EntityType="Self.ceg_alkalmazottak" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cegek" EntityType="Self.cegek" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="projekt_szolgaltatasok" EntityType="Self.projekt_szolgaltatasok" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="projektek" EntityType="Self.projektek" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="statuszok" EntityType="Self.statuszok" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="szolgaltatasok" EntityType="Self.szolgaltatasok" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="alkalmazott_kapcsolat" Association="Self.alkalmazott_kapcsolat">
+            <End Role="alkalmazottak" EntitySet="alkalmazottak" />
+            <End Role="ceg_alkalmazottak" EntitySet="ceg_alkalmazottak" />
+          </AssociationSet>
+          <AssociationSet Name="ceg_kapcsolat" Association="Self.ceg_kapcsolat">
+            <End Role="cegek" EntitySet="cegek" />
+            <End Role="ceg_alkalmazottak" EntitySet="ceg_alkalmazottak" />
+          </AssociationSet>
+          <AssociationSet Name="proejktek_ceg_id" Association="Self.proejktek_ceg_id">
+            <End Role="cegek" EntitySet="cegek" />
+            <End Role="projektek" EntitySet="projektek" />
+          </AssociationSet>
+          <AssociationSet Name="projekt_kapcsolat" Association="Self.projekt_kapcsolat">
+            <End Role="projektek" EntitySet="projektek" />
+            <End Role="projekt_szolgaltatasok" EntitySet="projekt_szolgaltatasok" />
+          </AssociationSet>
+          <AssociationSet Name="statuszok_kapcsolat" Association="Self.statuszok_kapcsolat">
+            <End Role="statuszok" EntitySet="statuszok" />
+            <End Role="projekt_szolgaltatasok" EntitySet="projekt_szolgaltatasok" />
+          </AssociationSet>
+          <AssociationSet Name="szolgaltatas_kapcsolat" Association="Self.szolgaltatas_kapcsolat">
+            <End Role="szolgaltatasok" EntitySet="szolgaltatasok" />
+            <End Role="projekt_szolgaltatasok" EntitySet="projekt_szolgaltatasok" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ProjektDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="alkalmazottak">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="vezeteknev" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="keresztnev" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="telefonszam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ceg_alkalmazottak" Relationship="Self.alkalmazott_kapcsolat" FromRole="alkalmazottak" ToRole="ceg_alkalmazottak" />
+        </EntityType>
+        <EntityType Name="ceg_alkalmazottak">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ceg_id" Type="Int32" Nullable="false" />
+          <Property Name="alkalmazott_id" Type="Int32" Nullable="false" />
+          <Property Name="beosztas" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="alkalmazott_statusz" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="alkalmazottak" Relationship="Self.alkalmazott_kapcsolat" FromRole="ceg_alkalmazottak" ToRole="alkalmazottak" />
+          <NavigationProperty Name="cegek" Relationship="Self.ceg_kapcsolat" FromRole="ceg_alkalmazottak" ToRole="cegek" />
+        </EntityType>
+        <EntityType Name="cegek">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="adoszam" Type="Int32" />
+          <Property Name="orszag" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="iranyitoszam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="telepules" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="kozterulet" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="kozterulet_jellege" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="hazszam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="cegnev" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ceg_tipus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="telefonszam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ceg_alkalmazottak" Relationship="Self.ceg_kapcsolat" FromRole="cegek" ToRole="ceg_alkalmazottak" />
+          <NavigationProperty Name="projektek" Relationship="Self.proejktek_ceg_id" FromRole="cegek" ToRole="projektek" />
+        </EntityType>
+        <EntityType Name="projekt_szolgaltatasok">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="projekt_id" Type="Int32" Nullable="false" />
+          <Property Name="szolgaltatas_id" Type="Int32" Nullable="false" />
+          <Property Name="statusz_id" Type="Int32" Nullable="false" />
+          <Property Name="egyseg_ar" Type="Int32" Nullable="false" />
+          <Property Name="mennyiseg" Type="Double" Nullable="false" />
+          <Property Name="megjegyzes" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="szinkod" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="projektek" Relationship="Self.projekt_kapcsolat" FromRole="projekt_szolgaltatasok" ToRole="projektek" />
+          <NavigationProperty Name="statuszok" Relationship="Self.statuszok_kapcsolat" FromRole="projekt_szolgaltatasok" ToRole="statuszok" />
+          <NavigationProperty Name="szolgaltatasok" Relationship="Self.szolgaltatas_kapcsolat" FromRole="projekt_szolgaltatasok" ToRole="szolgaltatasok" />
+        </EntityType>
+        <EntityType Name="projektek">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="megnevezes" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ceg_id" Type="Int32" Nullable="false" />
+          <Property Name="statusz" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="hatarido" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="cegek" Relationship="Self.proejktek_ceg_id" FromRole="projektek" ToRole="cegek" />
+          <NavigationProperty Name="projekt_szolgaltatasok" Relationship="Self.projekt_kapcsolat" FromRole="projektek" ToRole="projekt_szolgaltatasok" />
+        </EntityType>
+        <EntityType Name="statuszok">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="megnevezes" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="projekt_szolgaltatasok" Relationship="Self.statuszok_kapcsolat" FromRole="statuszok" ToRole="projekt_szolgaltatasok" />
+        </EntityType>
+        <EntityType Name="szolgaltatasok">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nev" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="leiras" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="egyseg_ar" Type="Int32" Nullable="false" />
+          <Property Name="mennyisegi_egyseg" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="projekt_szolgaltatasok" Relationship="Self.szolgaltatas_kapcsolat" FromRole="szolgaltatasok" ToRole="projekt_szolgaltatasok" />
+        </EntityType>
+        <Association Name="alkalmazott_kapcsolat">
+          <End Role="alkalmazottak" Type="Self.alkalmazottak" Multiplicity="1" />
+          <End Role="ceg_alkalmazottak" Type="Self.ceg_alkalmazottak" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="alkalmazottak">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ceg_alkalmazottak">
+              <PropertyRef Name="alkalmazott_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ceg_kapcsolat">
+          <End Role="cegek" Type="Self.cegek" Multiplicity="1" />
+          <End Role="ceg_alkalmazottak" Type="Self.ceg_alkalmazottak" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cegek">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ceg_alkalmazottak">
+              <PropertyRef Name="ceg_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="proejktek_ceg_id">
+          <End Role="cegek" Type="Self.cegek" Multiplicity="1" />
+          <End Role="projektek" Type="Self.projektek" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cegek">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="projektek">
+              <PropertyRef Name="ceg_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="projekt_kapcsolat">
+          <End Role="projektek" Type="Self.projektek" Multiplicity="1" />
+          <End Role="projekt_szolgaltatasok" Type="Self.projekt_szolgaltatasok" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="projektek">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="projekt_szolgaltatasok">
+              <PropertyRef Name="projekt_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="statuszok_kapcsolat">
+          <End Role="statuszok" Type="Self.statuszok" Multiplicity="1" />
+          <End Role="projekt_szolgaltatasok" Type="Self.projekt_szolgaltatasok" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="statuszok">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="projekt_szolgaltatasok">
+              <PropertyRef Name="statusz_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="szolgaltatas_kapcsolat">
+          <End Role="szolgaltatasok" Type="Self.szolgaltatasok" Multiplicity="1" />
+          <End Role="projekt_szolgaltatasok" Type="Self.projekt_szolgaltatasok" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="szolgaltatasok">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="projekt_szolgaltatasok">
+              <PropertyRef Name="szolgaltatas_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProjektDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="alkalmazottak" EntityType="Self.alkalmazottak" />
+          <EntitySet Name="ceg_alkalmazottak" EntityType="Self.ceg_alkalmazottak" />
+          <EntitySet Name="cegek" EntityType="Self.cegek" />
+          <EntitySet Name="projekt_szolgaltatasok" EntityType="Self.projekt_szolgaltatasok" />
+          <EntitySet Name="projektek" EntityType="Self.projektek" />
+          <EntitySet Name="statuszok" EntityType="Self.statuszok" />
+          <EntitySet Name="szolgaltatasok" EntityType="Self.szolgaltatasok" />
+          <AssociationSet Name="alkalmazott_kapcsolat" Association="Self.alkalmazott_kapcsolat">
+            <End Role="alkalmazottak" EntitySet="alkalmazottak" />
+            <End Role="ceg_alkalmazottak" EntitySet="ceg_alkalmazottak" />
+          </AssociationSet>
+          <AssociationSet Name="ceg_kapcsolat" Association="Self.ceg_kapcsolat">
+            <End Role="cegek" EntitySet="cegek" />
+            <End Role="ceg_alkalmazottak" EntitySet="ceg_alkalmazottak" />
+          </AssociationSet>
+          <AssociationSet Name="proejktek_ceg_id" Association="Self.proejktek_ceg_id">
+            <End Role="cegek" EntitySet="cegek" />
+            <End Role="projektek" EntitySet="projektek" />
+          </AssociationSet>
+          <AssociationSet Name="projekt_kapcsolat" Association="Self.projekt_kapcsolat">
+            <End Role="projektek" EntitySet="projektek" />
+            <End Role="projekt_szolgaltatasok" EntitySet="projekt_szolgaltatasok" />
+          </AssociationSet>
+          <AssociationSet Name="statuszok_kapcsolat" Association="Self.statuszok_kapcsolat">
+            <End Role="statuszok" EntitySet="statuszok" />
+            <End Role="projekt_szolgaltatasok" EntitySet="projekt_szolgaltatasok" />
+          </AssociationSet>
+          <AssociationSet Name="szolgaltatas_kapcsolat" Association="Self.szolgaltatas_kapcsolat">
+            <End Role="szolgaltatasok" EntitySet="szolgaltatasok" />
+            <End Role="projekt_szolgaltatasok" EntitySet="projekt_szolgaltatasok" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ProjektDBModelStoreContainer" CdmEntityContainer="ProjektDBEntities">
+          <EntitySetMapping Name="alkalmazottak">
+            <EntityTypeMapping TypeName="ProjektDBModel.alkalmazottak">
+              <MappingFragment StoreEntitySet="alkalmazottak">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="vezeteknev" ColumnName="vezeteknev" />
+                <ScalarProperty Name="keresztnev" ColumnName="keresztnev" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="telefonszam" ColumnName="telefonszam" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ceg_alkalmazottak">
+            <EntityTypeMapping TypeName="ProjektDBModel.ceg_alkalmazottak">
+              <MappingFragment StoreEntitySet="ceg_alkalmazottak">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="ceg_id" ColumnName="ceg_id" />
+                <ScalarProperty Name="alkalmazott_id" ColumnName="alkalmazott_id" />
+                <ScalarProperty Name="beosztas" ColumnName="beosztas" />
+                <ScalarProperty Name="alkalmazott_statusz" ColumnName="alkalmazott_statusz" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cegek">
+            <EntityTypeMapping TypeName="ProjektDBModel.cegek">
+              <MappingFragment StoreEntitySet="cegek">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="adoszam" ColumnName="adoszam" />
+                <ScalarProperty Name="orszag" ColumnName="orszag" />
+                <ScalarProperty Name="iranyitoszam" ColumnName="iranyitoszam" />
+                <ScalarProperty Name="telepules" ColumnName="telepules" />
+                <ScalarProperty Name="kozterulet" ColumnName="kozterulet" />
+                <ScalarProperty Name="kozterulet_jellege" ColumnName="kozterulet_jellege" />
+                <ScalarProperty Name="hazszam" ColumnName="hazszam" />
+                <ScalarProperty Name="cegnev" ColumnName="cegnev" />
+                <ScalarProperty Name="ceg_tipus" ColumnName="ceg_tipus" />
+                <ScalarProperty Name="telefonszam" ColumnName="telefonszam" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="projekt_szolgaltatasok">
+            <EntityTypeMapping TypeName="ProjektDBModel.projekt_szolgaltatasok">
+              <MappingFragment StoreEntitySet="projekt_szolgaltatasok">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="projekt_id" ColumnName="projekt_id" />
+                <ScalarProperty Name="szolgaltatas_id" ColumnName="szolgaltatas_id" />
+                <ScalarProperty Name="statusz_id" ColumnName="statusz_id" />
+                <ScalarProperty Name="egyseg_ar" ColumnName="egyseg_ar" />
+                <ScalarProperty Name="mennyiseg" ColumnName="mennyiseg" />
+                <ScalarProperty Name="megjegyzes" ColumnName="megjegyzes" />
+                <ScalarProperty Name="szinkod" ColumnName="szinkod" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="projektek">
+            <EntityTypeMapping TypeName="ProjektDBModel.projektek">
+              <MappingFragment StoreEntitySet="projektek">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="megnevezes" ColumnName="megnevezes" />
+                <ScalarProperty Name="ceg_id" ColumnName="ceg_id" />
+                <ScalarProperty Name="statusz" ColumnName="statusz" />
+                <ScalarProperty Name="hatarido" ColumnName="hatarido" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="statuszok">
+            <EntityTypeMapping TypeName="ProjektDBModel.statuszok">
+              <MappingFragment StoreEntitySet="statuszok">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="megnevezes" ColumnName="megnevezes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="szolgaltatasok">
+            <EntityTypeMapping TypeName="ProjektDBModel.szolgaltatasok">
+              <MappingFragment StoreEntitySet="szolgaltatasok">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nev" ColumnName="nev" />
+                <ScalarProperty Name="leiras" ColumnName="leiras" />
+                <ScalarProperty Name="egyseg_ar" ColumnName="egyseg_ar" />
+                <ScalarProperty Name="mennyisegi_egyseg" ColumnName="mennyisegi_egyseg" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
