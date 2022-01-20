@@ -28,7 +28,7 @@ namespace ProjektManager
             this.FormBorderStyle = FormBorderStyle.None;
            /* Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 20, 20));*/
             
-            fejSzovegLbl.Text = foOldalBtn.Text;
+            //fejSzovegLbl.Text = foOldalBtn.Text;
             projektUgyfelTipusCbx.DataSource = Enum.GetValues(typeof(CegTipus));
             ugyfelUgyfelTipusCbx.DataSource = Enum.GetValues(typeof(CegTipus));
             this.projektRepository = new ProjektRepository<Projektek>();
