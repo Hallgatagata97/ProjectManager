@@ -81,7 +81,6 @@
     <Compile Include="Alkalmazottak.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="AppConnection.cs" />
     <Compile Include="Cegek.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
@@ -120,14 +119,14 @@
     <Compile Include="Projekt_szolgaltatasok.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Repositories\Cégek\CegRepository.cs" />
-    <Compile Include="Repositories\Cégek\ICegRepository.cs" />
-    <Compile Include="Repositories\Projektek\IProjektRepository.cs" />
+    <Compile Include="Repositories\CegRepository.cs" />
+    <Compile Include="Repositories\ICegRepository.cs" />
+    <Compile Include="Repositories\IProjektRepository.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\Szolgáltatások\ISzolgaltatasRepository.cs" />
-    <Compile Include="Repositories\Projektek\ProjektRepository.cs" />
-    <Compile Include="Repositories\Szolgáltatások\SzolgaltatasokRepository.cs" />
+    <Compile Include="Repositories\ISzolgaltatasRepository.cs" />
+    <Compile Include="Repositories\ProjektRepository.cs" />
+    <Compile Include="Repositories\SzolgaltatasokRepository.cs" />
     <Compile Include="Forms\UjProjektFrm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -146,6 +145,10 @@
     <Compile Include="Forms\UjUgyfelFrm.Designer.cs">
       <DependentUpon>UjUgyfelFrm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Services\ClickEventService.cs" />
+    <Compile Include="Services\DataService_Cegek.cs" />
+    <Compile Include="Services\DataService_Projekt.cs" />
+    <Compile Include="Services\DataService_Szolgaltatas.cs" />
     <Compile Include="Statuszok.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>

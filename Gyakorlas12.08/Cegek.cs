@@ -10,24 +10,31 @@
 namespace ProjektManager
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Linq;
+    using System.Linq.Expressions;
+
     enum CegTipus
     {
         Magánszemély,
         Cég
     }
-    public partial class Cegek
+    
+    [Table("cegek")]
+    public partial class Cegek : IQueryable
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Cegek()
         {
+            
             this.ceg_alkalmazottak = new HashSet<ceg_alkalmazottak>();
             this.projektek = new HashSet<Projektek>();
         }
     
         public int id { get; set; }
-        public Nullable<int> adoszam { get; set; }
+        public string adoszam { get; set; }
         public string orszag { get; set; }
         public string iranyitoszam { get; set; }
         public string telepules { get; set; }
@@ -43,5 +50,21 @@ namespace ProjektManager
         public virtual ICollection<ceg_alkalmazottak> ceg_alkalmazottak { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Projektek> projektek { get; set; }
+
+        public Expression Expression => throw new NotImplementedException();
+
+        public Type ElementType => throw new NotImplementedException();
+
+        public IQueryProvider Provider => throw new NotImplementedException();
+
+        public IEnumerator<Cegek> GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

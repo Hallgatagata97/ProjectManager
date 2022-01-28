@@ -10,22 +10,28 @@
 namespace ProjektManager
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
-    
-    public partial class Projektek
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Linq;
+    using System.Linq.Expressions;
+
+    [Table("projektek")]
+    public partial class Projektek : IQueryable
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Projektek()
         {
             this.projekt_szolgaltatasok = new HashSet<Projekt_szolgaltatasok>();
+           
         }
         int id;
         string megnevezes;
         int ceg_id;
       string statusz;
         DateTime hatarido;
-       
-       
+
+        public virtual IQueryable<Projektek> projektek { get; set; }
         public virtual ICollection<Projekt_szolgaltatasok> projekt_szolgaltatasok { get; set; }
         public virtual Cegek cegek { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -35,6 +41,12 @@ namespace ProjektManager
         public int Ceg_id { get => ceg_id; set => ceg_id = value; }
         public string Statusz { get => statusz; set => statusz = value; }
         public DateTime Hatarido { get => hatarido; set => hatarido = value; }
+
+        public Expression Expression => throw new NotImplementedException();
+
+        public Type ElementType => throw new NotImplementedException();
+
+        public IQueryProvider Provider => throw new NotImplementedException();
 
         public Projektek(ICollection<Projekt_szolgaltatasok> projekt_szolgaltatasok, Cegek cegek, int id, string megnevezes, int ceg_id, string statusz, DateTime hatarido)
         {
@@ -46,5 +58,11 @@ namespace ProjektManager
             Statusz = statusz;
             Hatarido = hatarido;
         }
+
+        public IEnumerator GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
     }
+    
 }

@@ -20,10 +20,10 @@ namespace ProjektManager
         {
         }
     
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        /*protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
-        }
+        }*/
     
         public virtual DbSet<Alkalmazottak> alkalmazottak { get; set; }
         public virtual DbSet<ceg_alkalmazottak> ceg_alkalmazottak { get; set; }

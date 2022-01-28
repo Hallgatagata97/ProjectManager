@@ -1373,7 +1373,7 @@ namespace ProjektManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public cegekRow AddcegekRow(int adoszam, string orszag, string iranyitoszam, string telepules, string kozterulet, string kozterulet_jellege, string hazszam, string cegnev, string ceg_tipus, string telefonszam, string email) {
+            public cegekRow AddcegekRow(string adoszam, string orszag, string iranyitoszam, string telepules, string kozterulet, string kozterulet_jellege, string hazszam, string cegnev, string ceg_tipus, string telefonszam, string email) {
                 cegekRow rowcegekRow = ((cegekRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -1436,7 +1436,7 @@ namespace ProjektManager {
             private void InitClass() {
                 this.columnid = new global::System.Data.DataColumn("id", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnid);
-                this.columnadoszam = new global::System.Data.DataColumn("adoszam", typeof(int), null, global::System.Data.MappingType.Element);
+                this.columnadoszam = new global::System.Data.DataColumn("adoszam", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnadoszam);
                 this.columnorszag = new global::System.Data.DataColumn("orszag", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnorszag);
@@ -3178,10 +3178,10 @@ namespace ProjektManager {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public int adoszam {
+            public string adoszam {
                 get {
                     try {
-                        return ((int)(this[this.tablecegek.adoszamColumn]));
+                        return ((string)(this[this.tablecegek.adoszamColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'adoszam\' in table \'cegek\' is DBNull.", e);

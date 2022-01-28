@@ -12,6 +12,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.Collections.ObjectModel;
 using ProjektManager.Repositories;
+using ProjektManager.Services;
 
 namespace ProjektManager
 {
@@ -19,166 +20,71 @@ namespace ProjektManager
     public partial class Form1 : Form
     {
         IProjektRepository<Projektek> projektRepository;
-        ICegRepository<Cegek> cegRepository;
-        ISzolgaltatasRepository<Szolgaltatasok> szolgaltatasRepository;
+        
+        
+        ClickEventService buttons;
+        DataService_Projekt data;
      
         public Form1()
         {
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
-           /* Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 20, 20));*/
-            
+            /* Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 20, 20));*/
+
             //fejSzovegLbl.Text = foOldalBtn.Text;
+            
             projektUgyfelTipusCbx.DataSource = Enum.GetValues(typeof(CegTipus));
             ugyfelUgyfelTipusCbx.DataSource = Enum.GetValues(typeof(CegTipus));
-            this.projektRepository = new ProjektRepository<Projektek>();
+            this.projektRepository = new ProjektRepository<Projektek>(new ProjectManagerDBEntities());
+            this.buttons = new ClickEventService();
+            this.data = new DataService_Projekt(projektRepository);
+            
 
             
         }
-
-        /*public void UjnyitottProjektekBetoltes()
+        #region Főoldal
+        public void UjnyitottProjektekBetoltes()
         {
-            /* using (SqlConnection kapcsolat = new SqlConnection())
-             {
-                 kapcsolat.ConnectionString = ConfigurationManager.ConnectionStrings["ProjectManagerDBEntities"].ConnectionString;
-
-                 SqlCommand parancs =
-                 new SqlCommand("select count(1) as mennyiseg FROM Projektek WHERE Projektek.statusz = 'új'", kapcsolat);
-                 kapcsolat.Open();
-
-                 SqlDataReader reader = parancs.ExecuteReader();
-
-                 while (reader.Read())
-                 {
-                     ujprojektBtn.Text = (reader["mennyiseg"].ToString());
-
-                 }
-                 reader.Close();
-             }
-           
-            
-           
-
-
-        }*/
-       /* private void NyitottProjektekBetoltes()
+            ujprojektBtn.Text = data.GetNewProjects(ujprojektBtn);
+            // label21.Text = data.GetNewProjects();
+        }
+        private void NyitottProjektekBetoltes()
         {
-            
-            using (SqlConnection kapcsolat = new SqlConnection())
-            {
 
-                var context = new ProjectManagerDBEntities();
-              
-              
-                kapcsolat.ConnectionString = ConfigurationManager.ConnectionStrings["ProjectManagerDBEntities"].ConnectionString;
-                SqlCommand parancs =
-                new SqlCommand("select count(1) as mennyiseg FROM Projektek WHERE Projektek.statusz = 'Új' OR Projektek.statusz = 'Folyamat' OR Projektek.statusz = 'Elkészült' OR Projektek.statusz = 'Átadásra'", kapcsolat);
-                kapcsolat.Open();
+            nyitottProjektBtn.Text = data.CountOfOpenProjects();
 
-                SqlDataReader reader = parancs.ExecuteReader();
 
-                while (reader.Read())
-                {
-                    nyitottProjektBtn.Text = (reader["mennyiseg"].ToString());
-
-                }
-                reader.Close();
-            }
-        }*/
+        }
         private void FuggoProjektekBetoltes()
         {
-            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DBConstr"].ConnectionString);
-            con.Open();
-          
-            
-                folyamatbanBtn.Text = projektRepository.GetCoutofProjekt();
-           
-            
-            /*
 
-            {
-                kapcsolat.ConnectionString = ConfigurationManager.ConnectionStrings["DBConstr"].ConnectionString;
-                SqlCommand parancs =
-                new SqlCommand("select count(1) as mennyiseg FROM Projektek WHERE Projektek.statusz = 'Folyamat'", kapcsolat);
-                kapcsolat.Open();
+            folyamatbanBtn.Text = data.CountOfPendingProjects(folyamatbanBtn);
 
-                SqlDataReader reader = parancs.ExecuteReader();
 
-                while (reader.Read())
-                {
-                    folyamatbanBtn.Text = (reader["mennyiseg"].ToString());
-
-                }
-                reader.Close();
-            }*/
         }
-        /*private void AtadasraVaroProjektekBetoltes()
-        {
-            using (SqlConnection kapcsolat = new SqlConnection("ProjectManagerDBEntities"))
-            {
-                kapcsolat.ConnectionString = ConfigurationManager.ConnectionStrings["DBConstr"].ConnectionString;
-                SqlCommand parancs =
-                new SqlCommand("select count(1) as mennyiseg FROM Projektek WHERE Projektek.statusz = 'Átadásra'", kapcsolat);
-                kapcsolat.Open();
-
-                SqlDataReader reader = parancs.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    atadasraBtn.Text = (reader["mennyiseg"].ToString());
-
-                }
-                reader.Close();
-            }
-        }*/
-        /*private void LejartProjektekBetoltes()
-        {
-            using (SqlConnection kapcsolat = new SqlConnection())
-            {
-                kapcsolat.ConnectionString = ConfigurationManager.ConnectionStrings["DBConstr"].ConnectionString;
-                SqlCommand parancs =
-                new SqlCommand("select count(1) as mennyiseg FROM [dbo].[Projektek] WHERE hatarido < CURRENT_TIMESTAMP AND Projektek.statusz = 'Új' OR Projektek.statusz = 'Folyamat';", kapcsolat);
-                kapcsolat.Open();
-
-                SqlDataReader reader = parancs.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    lejartBtn.Text = (reader["mennyiseg"].ToString());
-
-                }
-                reader.Close();
-            }
-        }*/
-       /* private void LBFeltoltesNyitottPr()
-        {
-            using (SqlConnection kapcsolat = new SqlConnection())
-            {
-                kapcsolat.ConnectionString = ConfigurationManager.ConnectionStrings["DBConstr"].ConnectionString;
-                SqlDataAdapter adapter = new SqlDataAdapter("SELECT Projektek.id, Projektek.megnevezes, Projektek.hatarido FROM Projektek", kapcsolat);
-
-                DataSet adatok = new DataSet();
-                adapter.Fill(adatok, "Projektek");
-                //projektekLbx.DataSource = adatok;
-                listBox1.DataSource = adatok;
-                
-                
-            }
-        }*/
+       
         private void Form1_Load(object sender, EventArgs e)
         {
-         
+            // TODO: This line of code loads data into the 'projectManagerDBDataSet2.statuszok' table. You can move, or remove it, as needed.
+            this.statuszokTableAdapter.Fill(this.projectManagerDBDataSet2.statuszok);
+            // TODO: This line of code loads data into the 'projectManagerDBDataSet2.cegek' table. You can move, or remove it, as needed.
+            this.cegekTableAdapter.Fill(this.projectManagerDBDataSet2.cegek);
 
-            foOldalBtn.BackColor = Color.FromArgb(70, 40, 90);
-            //NyitottProjektekBetoltes();
-           // UjnyitottProjektekBetoltes();
+
+            buttons.ClickOnButton(foOldalBtn);
+            NyitottProjektekBetoltes();
+            UjnyitottProjektekBetoltes();
             FuggoProjektekBetoltes();
-           // AtadasraVaroProjektekBetoltes();
+            // AtadasraVaroProjektekBetoltes();
             foOldalPnl.BringToFront();
-
-
-
-
+            if (nyitottProjektBtn.Text.Length >= 2)
+            {
+                nyitottProjektBtn.BackColor = Color.Red;
+            }
+            if (ujprojektBtn.Text == "0")
+            {
+                ujprojektBtn.BackColor = Color.Gray;
+            }
         }
         private void xBtn_Click(object sender, EventArgs e)
         {
@@ -190,68 +96,71 @@ namespace ProjektManager
         private void foOldalBtn_Click(object sender, EventArgs e)
         {
             fejSzovegLbl.Text = foOldalBtn.Text;
-      
-            foOldalBtn.BackColor = Color.FromArgb(70, 40, 90);
-           // NyitottProjektekBetoltes();
-           // UjnyitottProjektekBetoltes();
+
+            buttons.ClickOnButton(foOldalBtn);
+            NyitottProjektekBetoltes();
+            UjnyitottProjektekBetoltes();
             FuggoProjektekBetoltes();
-           // AtadasraVaroProjektekBetoltes();
             foOldalPnl.BringToFront();
         }
         private void foOldalBtn_Leave(object sender, EventArgs e)
         {
-            foOldalBtn.BackColor = Color.FromArgb(25, 15, 35);
+
+            buttons.LeaveButton(foOldalBtn);
         }
 
 
         #endregion
-        #region buttons
+        #region Buttons
         private void projektekBtn_Click(object sender, EventArgs e)
         {
-            foOldalBtn.BackColor = Color.FromArgb(25, 15, 35);
-            projektekBtn.BackColor = Color.FromArgb(70, 40, 90);
+            buttons.LeaveButton(foOldalBtn);
+            buttons.ClickOnButton(projektekBtn);
             fejSzovegLbl.Text = projektekBtn.Text;
             projektekPnl.BringToFront();
+
+            projektUgyfelTipusCbx.DataSource = Enum.GetValues(typeof(CegTipus));
 
 
         }
 
         private void ugyfelekBtn_Click(object sender, EventArgs e)
         {
-            foOldalBtn.BackColor = Color.FromArgb(25, 15, 35);
-            ugyfelekBtn.BackColor = Color.FromArgb(70, 40, 90);
+            buttons.LeaveButton(foOldalBtn);
+
+            buttons.ClickOnButton(ugyfelekBtn);
             fejSzovegLbl.Text = ugyfelekBtn.Text;
-             ugyfelekPnl.BringToFront();
+            ugyfelekPnl.BringToFront();
         }
 
         private void szolgaltatasokBtn_Click(object sender, EventArgs e)
         {
-            foOldalBtn.BackColor = Color.FromArgb(25, 15, 35);
-            szolgaltatasokBtn.BackColor = Color.FromArgb(70, 40, 90);
+            buttons.LeaveButton(foOldalBtn);
+            buttons.ClickOnButton(szolgaltatasokBtn);
             fejSzovegLbl.Text = szolgaltatasokBtn.Text;
             szolgaltatasPnl.BringToFront();
         }
 
         private void projektekBtn_Leave(object sender, EventArgs e)
         {
-            projektekBtn.BackColor = Color.FromArgb(25, 15, 35);
+            buttons.LeaveButton(projektekBtn);
         }
 
         private void ugyfelekBtn_Leave(object sender, EventArgs e)
         {
-            ugyfelekBtn.BackColor = Color.FromArgb(25, 15, 35);
+            buttons.LeaveButton(ugyfelekBtn);
         }
 
         private void szolgaltatasokBtn_Leave(object sender, EventArgs e)
         {
-            szolgaltatasokBtn.BackColor = Color.FromArgb(25, 15, 35);
+            buttons.LeaveButton(szolgaltatasokBtn);
         }
 
-       
+
 
         private void nyitottProjektBtn_Click(object sender, EventArgs e)
         {
-           // LBFeltoltesNyitottPr();
+            // LBFeltoltesNyitottPr();
 
 
 
@@ -261,9 +170,9 @@ namespace ProjektManager
         private void UjProjektBtn_Click(object sender, EventArgs e)
         {
             UjProjektFrm frm = new UjProjektFrm();
-           if (frm.ShowDialog() == DialogResult.OK)
+            if (frm.ShowDialog() == DialogResult.OK)
             {
-                projektekBtn.BackColor = Color.FromArgb(70, 40, 90);
+                buttons.ClickOnButton(projektekBtn);
             }
         }
 
@@ -292,7 +201,7 @@ namespace ProjektManager
             {
                 ujSzolgaltatasBtn.Text = "Új szolgáltatás";
             }
-            
+
 
         }
 
@@ -310,8 +219,22 @@ namespace ProjektManager
             UjProjektFrm frm = new UjProjektFrm();
             if (frm.ShowDialog() == DialogResult.OK)
             {
-                projektekBtn.BackColor = Color.FromArgb(70, 40, 90);
+                buttons.ClickOnButton(projektekBtn);
             }
         }
+        #endregion
+
+        #region Projektek
+        public void PanelKezelo()
+        {
+            
+            if (projektekPnl.Visible)
+            {
+
+            }
+        }
+
+        #endregion
+
     }
 }

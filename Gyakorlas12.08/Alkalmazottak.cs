@@ -11,12 +11,15 @@ namespace ProjektManager
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations.Schema;
+
     
     enum AlkalmazottStatusz
     {
         Aktív,
         Inaktív
     }
+    [Table("alkalmazottak")]
     public partial class Alkalmazottak
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -24,14 +27,27 @@ namespace ProjektManager
         {
             this.ceg_alkalmazottak = new HashSet<ceg_alkalmazottak>();
         }
+        int id;
+        string vezeteknev, keresztnev, email, telefonszam;
     
-        public int id { get; set; }
-        public string vezeteknev { get; set; }
-        public string keresztnev { get; set; }
-        public string email { get; set; }
-        public string telefonszam { get; set; }
+      
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ceg_alkalmazottak> ceg_alkalmazottak { get; set; }
+        public int Id { get => id; set => id = value; }
+        public string Vezeteknev { get => vezeteknev; set => vezeteknev = value; }
+        public string Keresztnev { get => keresztnev; set => keresztnev = value; }
+        public string Email { get => email; set => email = value; }
+        public string Telefonszam { get => telefonszam; set => telefonszam = value; }
+
+        public Alkalmazottak(ICollection<ceg_alkalmazottak> ceg_alkalmazottak, int id, string vezeteknev, string keresztnev, string email, string telefonszam)
+        {
+            this.ceg_alkalmazottak = ceg_alkalmazottak;
+            Id = id;
+            Vezeteknev = vezeteknev;
+            Keresztnev = keresztnev;
+            Email = email;
+            Telefonszam = telefonszam;
+        }
     }
 }

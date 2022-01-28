@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjektManager.Repositories
 {
-    interface ISzolgaltatasRepository<Szolgaltatasok> where Szolgaltatasok : class
+    public interface ISzolgaltatasRepository<Szolgaltatasok> where Szolgaltatasok : class
     {
         Szolgaltatasok GetSzolgaltatasById(int id);
         IEnumerable<Szolgaltatasok> GetAllSzolgaltatasData();
